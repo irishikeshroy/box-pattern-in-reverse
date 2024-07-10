@@ -1,0 +1,10 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.App {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  gap: 4px;
+}
