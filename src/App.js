@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./styles.css";
 
 export default function App() {
@@ -9,21 +9,23 @@ export default function App() {
       // Create a copy of the array
       let newValue = [...value];
 
-      // Define a function to remove elements with delay
+      // Define a function to remove elements with delay using setTimeout
       const removeElementsWithDelay = () => {
         if (newValue.length > 0) {
           // Remove the last element
           newValue.pop();
           // Update state after a delay
-          setTimeout(() => {
-            setValue([...newValue]); // Update state with the new array
-            removeElementsWithDelay(); // Recursively call to remove next element
-          }, 50); // Delay of 1000ms (1 second)
+          setValue([...newValue]); // Update state with the new array
         }
       };
 
-      // Start removing elements with delay
-      removeElementsWithDelay();
+      // Start removing elements with a delay
+      const intervalId = setInterval(() => {
+        removeElementsWithDelay();
+        if (newValue.length === 0) {
+          clearInterval(intervalId); // Stop the interval when all elements are removed
+        }
+      }, 50); // Delay of 50ms between each removal
     } else {
       // Add index to the array
       setValue((prev) => [...prev, index]);
